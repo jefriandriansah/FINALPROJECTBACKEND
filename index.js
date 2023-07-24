@@ -5,11 +5,17 @@ const mongoose = require('mongoose');
 const port = 3000; // Ganti dengan port yang Anda inginkan
 const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken')
+const dotenv = require('dotenv')
+dotenv.config()
 const authenticateToken = require('./middlewares/auth.middleware.js')
-mongoose.connect('mongodb://127.0.0.1/test', {
+// const uri = 'mongodb+srv://vercel-admin-user:QyIYEv01g1MtLvUS@cluster0.imjivyl.mongodb.net/myFirstDatabase?retryWrites=true&w=majority'
+mongoose.connect(process.env.MONGODB_URI, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
-});
+}).then(result => {
+  console.log('connected to mongoDB')
+
+}).catch(err => console.log('error connected monggoDB'));
 const Schema = mongoose.Schema;
 const hospitalSchema = new Schema({
   name: String,
